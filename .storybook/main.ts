@@ -1,9 +1,11 @@
-import { StorybookViteConfig } from '@storybook/builder-vite';
+import type { StorybookViteConfig } from '@storybook/builder-vite';
+import { mergeConfig } from 'vite'; 
+import viteConfig from '../vite.config';
 
 const config: StorybookViteConfig = {
   framework: '@storybook/react',
   stories: ['../src/stories/**/*.stories.mdx', '../src/stories/**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: ['@storybook/addon-a11y', '@storybook/addon-links', '@storybook/addon-essentials'],
+  addons: ['@storybook/addon-a11y', '@storybook/addon-essentials'],
   core: {
     builder: '@storybook/builder-vite',
   },
@@ -11,8 +13,8 @@ const config: StorybookViteConfig = {
     storyStoreV7: true,
   },
   async viteFinal(config, { configType }) {
-    // customize the Vite config here
-    return config;
+    const nextConfig = mergeConfig(config, viteConfig);
+    return nextConfig;
   },
 };
 
